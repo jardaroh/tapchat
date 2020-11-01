@@ -9,6 +9,7 @@
       <user-list></user-list>
     </main>
     <footer></footer>
+    <chat-window></chat-window>
   </div>
 </template>
 
@@ -18,11 +19,13 @@ import useUser from '@/composition/useUser';
 import useSocket from '@/composition/useSocket';
 import LoginForm from '@/components/LoginForm.vue';
 import UserList from '@/components/UserList.vue';
+import ChatWindow from '@/components/ChatWindow.vue';
 
 export default {
   components: {
     LoginForm,
     UserList,
+    ChatWindow,
   },
   setup() {
     const { signedInUser } = useUser();

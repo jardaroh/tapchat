@@ -3,6 +3,7 @@
     <div v-for="(user, i) in users"
          :key="i"
          class="userItem"
+         @click="openChat(user)"
     >
       <div class="username">{{ user.username }}</div>
       <span class="hover">open chat</span>
@@ -14,6 +15,7 @@
 <script>
 import { ref } from 'vue';
 import axios from 'axios';
+import useChat from '@/composition/useChat';
 import useSocket from '../composition/useSocket';
 
 const users = ref([]);
@@ -25,6 +27,7 @@ const getUsers = async () => {
 export default {
   setup() {
     const { socket, EVENTS } = useSocket();
+    const { openChat } = useChat();
 
     socket.on(EVENTS.USER_CONNECT, (data) => {
       const foundUser = users.value.find((u) => u.username === data.username);
@@ -42,6 +45,7 @@ export default {
 
     return {
       users,
+      openChat,
     };
   },
 };
