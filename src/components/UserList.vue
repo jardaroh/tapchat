@@ -7,18 +7,18 @@
     >
       <div class="username">{{ user.username }}</div>
       <span class="hover">open chat</span>
-      <span class="count">1</span>
+      <span class="count">{{ user.newMessageCount > 0 ? user.newMessageCount : '' }}</span>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
 import axios from 'axios';
+import useUser from '@/composition/useUser';
 import useChat from '@/composition/useChat';
 import useSocket from '../composition/useSocket';
 
-const users = ref([]);
+const { users } = useUser();
 const getUsers = async () => {
   const result = await axios.get('/api/users');
   users.value = result.data;

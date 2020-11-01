@@ -6,13 +6,20 @@ import useSocket from '@/composition/useSocket';
 const chat = shallowRef(null);
 const messages = shallowRef([]);
 const { socket, EVENTS } = useSocket();
+const { signedInUser, users } = useUser();
 
 const handleChatMessage = (data) => {
+  if (!chat.value) {
+    const user = users.value.find((u) => u.username === data.from);
+    if (user) {
+      user.newMessageCount = user.newMessageCount ? user.newMessageCount += 1 : 1;
+    }
+    return;
+  }
   messages.value = [...messages.value, data];
 };
 
 const openChat = async (them) => {
-  const { signedInUser } = useUser();
   const roomName = [signedInUser.value.username, them.username]
     .sort((a, b) => (a > b ? 1 : -1))
     .join('-');
@@ -28,6 +35,8 @@ const openChat = async (them) => {
   };
 
   socket.on(EVENTS.MESSAGE_FROM_USER, handleChatMessage);
+
+  (users.value.find((u) => u.username === them.username) || {}).newMessageCount = 0;
 };
 
 const sendMessage = (message) => {

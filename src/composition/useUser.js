@@ -2,6 +2,7 @@ import { ref, watch } from 'vue';
 
 const SIGNED_IN_USER = 'signedInUser';
 const signedInUser = ref(JSON.parse(localStorage.getItem(SIGNED_IN_USER)));
+const users = ref([]);
 
 watch(signedInUser, (newVal) => {
   if (newVal) {
@@ -13,4 +14,5 @@ watch(signedInUser, (newVal) => {
 
 export default () => ({
   signedInUser,
+  users,
 });
