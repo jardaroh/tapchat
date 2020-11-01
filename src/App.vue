@@ -13,7 +13,9 @@
 </template>
 
 <script>
+import { watch } from 'vue';
 import useUser from '@/composition/useUser';
+import useSocket from '@/composition/useSocket';
 import LoginForm from '@/components/LoginForm.vue';
 import UserList from '@/components/UserList.vue';
 
@@ -24,6 +26,13 @@ export default {
   },
   setup() {
     const { signedInUser } = useUser();
+    const { socket, EVENTS } = useSocket();
+
+    watch(signedInUser, (newVal, oldVal) => {
+      if (!newVal) {
+        socket.emit(EVENTS.USER_DISCONNECT, oldVal);
+      }
+    });
 
     return {
       signedInUser,

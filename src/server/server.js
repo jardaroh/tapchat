@@ -28,6 +28,12 @@ io.on(EVENTS.CLIENT_CONNECT, (socket) => {
     }
     io.emit(EVENTS.USER_CONNECT, data);
   });
+
+  socket.on(EVENTS.USER_DISCONNECT, (data) => {
+    io.emit(EVENTS.USER_DISCONNECT, data);
+    const userIndex = users.findIndex((user) => user.username === data.username);
+    users.splice(userIndex, 1);
+  });
 });
 
 httpServer.listen(9000, () => {

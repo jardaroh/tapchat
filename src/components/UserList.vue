@@ -26,6 +26,11 @@ export default {
       }
     });
 
+    socket.on(EVENTS.USER_DISCONNECT, (data) => {
+      const userIndex = users.value.findIndex((user) => user.username === data.username);
+      users.value.splice(userIndex, 1);
+    });
+
     getUsers();
 
     return {
