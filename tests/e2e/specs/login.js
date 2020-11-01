@@ -11,4 +11,11 @@ describe('Login Process', () => {
     cy.get('input').type('test-user').type('{enter}');
     cy.contains('button', 'Sign out');
   });
+
+  it('Allows for signing out', () => {
+    localStorage.setItem('signedInUser', JSON.stringify({ username: 'test-user' }));
+    cy.visit('/');
+    cy.contains('button', 'Sign out').click();
+    cy.contains('label', 'Username');
+  });
 });

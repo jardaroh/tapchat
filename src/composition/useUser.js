@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue';
 
 const SIGNED_IN_USER = 'signedInUser';
-const signedInUser = ref(null);
+const signedInUser = ref(localStorage.getItem(SIGNED_IN_USER));
 
 watch(signedInUser, () => {
   if (signedInUser.value) {

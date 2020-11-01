@@ -1,7 +1,7 @@
 <template>
   <login-form v-if="!signedInUser"></login-form>
   <div v-else id="#App">
-    <button>Sign out</button>
+    <button @click="signedInUser = null">Sign out</button>
   </div>
 </template>
 
