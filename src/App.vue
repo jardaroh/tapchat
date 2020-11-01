@@ -4,7 +4,10 @@
     <header>
       <button @click="signedInUser = null">Sign out</button>
     </header>
-    <main></main>
+    <main>
+      <div></div>
+      <user-list></user-list>
+    </main>
     <footer></footer>
   </div>
 </template>
@@ -12,10 +15,12 @@
 <script>
 import useUser from '@/composition/useUser';
 import LoginForm from '@/components/LoginForm.vue';
+import UserList from '@/components/UserList.vue';
 
 export default {
   components: {
     LoginForm,
+    UserList,
   },
   setup() {
     const { signedInUser } = useUser();

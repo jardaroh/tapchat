@@ -22,7 +22,7 @@ io.on(EVENTS.CLIENT_CONNECT, (socket) => {
     if (!existingUser) {
       users.push(data);
     }
-    console.log(users);
+    io.emit(EVENTS.USER_CONNECT, data);
   });
 });
 
