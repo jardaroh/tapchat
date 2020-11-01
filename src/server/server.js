@@ -12,6 +12,10 @@ const io = socketIo(httpServer);
 
 const users = [];
 
+app.get('/users', (req, res) => {
+  res.send(users);
+});
+
 io.on(EVENTS.CLIENT_CONNECT, (socket) => {
   socket.on(EVENTS.IDENTIFICATION_INIT, () => {
     socket.emit(EVENTS.IDENTIFICATION);

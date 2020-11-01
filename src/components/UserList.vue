@@ -6,11 +6,17 @@
 
 <script>
 import { ref } from 'vue';
+import axios from 'axios';
 import useSocket from '../composition/useSocket';
+
+const users = ref([]);
+const getUsers = async () => {
+  const result = await axios.get('/api/users');
+  users.value = result.data;
+};
 
 export default {
   setup() {
-    const users = ref([]);
     const { socket, EVENTS } = useSocket();
 
     socket.on(EVENTS.USER_CONNECT, (data) => {
@@ -19,6 +25,8 @@ export default {
         users.value.push(data);
       }
     });
+
+    getUsers();
 
     return {
       users,
