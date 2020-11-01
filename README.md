@@ -5,6 +5,13 @@
 npm install
 ```
 
+## Run in Demo mode
+> useful easy to run command that runs both the dev server and backend
+
+```
+npm run demo
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
