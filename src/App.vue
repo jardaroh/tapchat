@@ -1,6 +1,8 @@
 <template>
   <login-form v-if="!signedInUser"></login-form>
-  <div v-else id="#App"></div>
+  <div v-else id="#App">
+    <button>Sign out</button>
+  </div>
 </template>
 
 <script>
