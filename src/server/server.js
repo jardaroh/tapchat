@@ -5,6 +5,7 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const { EVENTS } = require('../composition/useSocket')();
+const db = require('./db');
 
 const app = express();
 const httpServer = new http.Server(app);
