@@ -1,4 +1,5 @@
 import { shallowRef } from 'vue';
+import axios from 'axios';
 import useUser from '@/composition/useUser';
 import useSocket from '@/composition/useSocket';
 
@@ -10,11 +11,17 @@ const handleChatMessage = (data) => {
   messages.value = [...messages.value, data];
 };
 
-const openChat = (them) => {
+const openChat = async (them) => {
   const { signedInUser } = useUser();
   const roomName = [signedInUser.value.username, them.username]
     .sort((a, b) => (a > b ? 1 : -1))
     .join('-');
+  const result = await axios.get(`/api/messages/${roomName}`);
+  if (result.status === 200) {
+    messages.value = result.data;
+  } else {
+    messages.value = [];
+  }
   chat.value = {
     roomName,
     participants: { me: signedInUser.value, them },
