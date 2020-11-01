@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <div v-for="(user, i) in users" :key="i">{{ user.username }}</div>
+  <div class="UserList">
+    <div v-for="(user, i) in users"
+         :key="i"
+         class="userItem"
+    >
+      <div class="username">{{ user.username }}</div>
+      <span class="hover">open chat</span>
+      <span class="count">1</span>
+    </div>
   </div>
 </template>
 
@@ -41,11 +48,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-div {
+div.UserList {
   width: 15rem;
   padding: 1rem;
-  &>div {
+  &>div.userItem {
+    display: grid;
+    grid-template-columns: auto max-content max-content;
+    gap: 0.5rem;
     padding: 0 0 0.5rem 0;
+    cursor: pointer;
+    .hover {
+      opacity: 0;
+    }
+    &:hover>.hover {
+      opacity: 0.5;
+    }
   }
 }
 </style>
