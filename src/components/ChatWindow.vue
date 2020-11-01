@@ -1,29 +1,59 @@
 <template>
-  <div v-if="chat" class="ChatWrapper" @click="chat = null">
+  <div v-if="chat" class="ChatWrapper" @click="message = ''; chat = null">
     <div class="ChatWindow" @click.stop>
       <div class="header">{{ chat.participants.them.username }}</div>
-      <div class="body"></div>
+      <div class="body">
+        <div class="messageWrapper">
+          <div v-for="(msg, i) in messages"
+               :key="i"
+               class="chatMessage"
+          >
+            <div :class="{
+              right: msg.from === chat.participants.me.username,
+              left: msg.from === chat.participants.them.username,
+            }">
+              {{ msg.message }}
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="footer">
         <label>
           <input type="text"
                  :placeholder="`write a message to ${chat.participants.them.username}`"
+                 v-model="message"
+                 @keydown.enter="send"
           >
         </label>
-        <button>Send</button>
+        <button @click="send">Send</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import useChat from '@/composition/useChat';
 
 export default {
   setup() {
-    const { chat } = useChat();
+    const {
+      chat,
+      messages,
+      sendMessage,
+    } = useChat();
+    const message = ref('');
+
+    const send = () => {
+      sendMessage(message.value);
+      message.value = '';
+    };
 
     return {
       chat,
+      message,
+      messages,
+      send,
     };
   },
 };
@@ -69,6 +99,25 @@ export default {
       gap: 0.5rem;
       input {
         width: 100%;
+      }
+    }
+    .messageWrapper {
+      .chatMessage {
+        clear: both;
+        &>div {
+          padding: 1rem;
+          margin: 0 0 1rem 0;
+        }
+        .left {
+          float: left;
+          background: var(--blue-light);
+          border-radius: 1rem 1rem 1rem 0;
+        }
+        .right {
+          float: right;
+          background: var(--gray);
+          border-radius: 1rem 1rem 0 1rem;
+        }
       }
     }
   }

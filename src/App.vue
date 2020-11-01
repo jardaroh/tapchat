@@ -46,6 +46,7 @@ export default {
 
 <style lang="scss">
 :root {
+  --gray: #CBD5E0;
   --blue-light: #BEE3F8;
   --blue-darker: #3182CE;
 }

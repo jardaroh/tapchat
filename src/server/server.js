@@ -11,6 +11,7 @@ const httpServer = new http.Server(app);
 const io = socketIo(httpServer);
 
 const users = [];
+const userSockets = {};
 
 app.get('/users', (req, res) => {
   res.send(users);
@@ -26,6 +27,11 @@ io.on(EVENTS.CLIENT_CONNECT, (socket) => {
     if (!existingUser) {
       users.push(data);
     }
+    if (!userSockets[data.username]) {
+      userSockets[data.username] = [socket];
+    } else {
+      userSockets[data.username] = [...userSockets[data.username], socket];
+    }
     io.emit(EVENTS.USER_CONNECT, data);
   });
 
@@ -33,6 +39,12 @@ io.on(EVENTS.CLIENT_CONNECT, (socket) => {
     io.emit(EVENTS.USER_DISCONNECT, data);
     const userIndex = users.findIndex((user) => user.username === data.username);
     users.splice(userIndex, 1);
+  });
+
+  socket.on(EVENTS.MESSAGE_TO_USER, (data) => {
+    (userSockets[data.to] || []).forEach((s) => {
+      s.emit(EVENTS.MESSAGE_FROM_USER, data);
+    });
   });
 });
 

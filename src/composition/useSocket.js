@@ -8,6 +8,8 @@ const EVENTS = {
   IDENTIFICATION: 'identification',
   IDENTIFICATION_INIT: 'identification-init',
   IDENTIFICATION_SUCCESS: 'identification-success',
+  MESSAGE_TO_USER: 'message-to-user',
+  MESSAGE_FROM_USER: 'message-from-user',
 };
 const socket = io();
 
