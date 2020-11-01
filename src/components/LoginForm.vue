@@ -18,13 +18,11 @@ export default {
     const input = ref(null);
 
     socket.on(EVENTS.IDENTIFICATION, () => {
-      console.log('server requests data');
       socket.emit(EVENTS.IDENTIFICATION, signedInUser.value);
     });
 
     const signIn = () => {
       signedInUser.value = { username: input.value.value };
-      console.log('hey');
       socket.emit(EVENTS.IDENTIFICATION_INIT);
     };
 
