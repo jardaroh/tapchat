@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="LoginForm">
     <label for="LoginInput">Username</label>
     <input ref="input" id="LoginInput" type="text" @keydown.enter="signIn">
     <button @click="signIn">Sign in</button>
@@ -33,3 +33,23 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.LoginForm {
+  position: absolute;
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 1rem;
+  place-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  * {
+    line-height: 1rem;
+  }
+  button {
+    grid-column: 1 / span 2;
+    width: 100%;
+  }
+}
+</style>
